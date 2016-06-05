@@ -3,6 +3,7 @@
 #include <boost/lambda/lambda.hpp>
 
 #include "Linq.h"
+#include <iostream>
 
 namespace CppLinq
 {
@@ -36,6 +37,12 @@ namespace CppLinq
 		void PerformTest()
 		{
 			assert(from(m_guests).count() == 3);
+
+			assert(from(m_guests).orderby<int>(&_1 ->* &Person::m_age, Descending).count() == 3);
+			for (int i = 0; i < m_guests->size(); ++i)
+			{
+				cout << m_guests->at(i).m_name << ' ' << m_guests->at(i).m_age << endl;
+			}
 			
 			assert(from(m_guests).where(&_1 ->* &Person::m_age > 30).count() == 1);
 			
