@@ -115,37 +115,25 @@ int main()
 
 ###### Specifies a data source and a range variable (similar to an iteration variable)
 
-TBA
-
 ### where clause
 
 ###### Filters source elements based on one or more Boolean expressions separated by logical AND and OR operators
-
-TBA
 
 ### select clause
 
 ###### Specifies the type and shape that the elements in the returned sequence will have when the query is executed
 
-TBA
-
 ### group clause
 
 ###### Groups query results according to a specified key value
-
-TBA
 
 ### into
 
 ###### Provides an identifier that can serve as a reference to the results of a join, group or select clause
 
-TBA
-
 ### orderby clause
 
 ###### Sorts query results in ascending or descending order based on the default comparer for the element type
-
-TBA
 
 ## Dependencies
 
