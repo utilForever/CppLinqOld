@@ -2,7 +2,7 @@
 
 ###### C++ Linq Library compatible with C++98/03 (not use Modern C++)
 
-```
+```C++
 	class LinqTest
 	{
 	public:
