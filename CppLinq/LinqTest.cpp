@@ -1,9 +1,9 @@
 #include <vector>
+#include <iostream>
 
 #include <boost/lambda/lambda.hpp>
 
 #include "Linq.h"
-#include <iostream>
 
 namespace CppLinq
 {
@@ -34,7 +34,7 @@ namespace CppLinq
 			m_guests->push_back(Person("Eliz", 27));
 		}
 
-		void PerformTest()
+		void PerformTest() const
 		{
 			assert(from(m_guests).count() == 3);
 
