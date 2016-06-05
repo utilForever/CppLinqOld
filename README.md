@@ -3,6 +3,11 @@
 ###### C++ Linq Library compatible with C++98/03 (not use Modern C++)
 
 ```C++
+#include <vector>
+#include <boost/lambda/lambda.hpp>
+
+#include "Linq.h"
+
 class LinqTest
 {
 public:
@@ -76,6 +81,12 @@ private:
 
     shared_ptr<vector<Person>> m_guests;
 };
+
+int main()
+{
+	CppLinq::LinqTest test;
+	test.PerformTest();
+}
 ```
 
 ## Supported Features
