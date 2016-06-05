@@ -122,7 +122,7 @@ namespace CppLinq
 				
 				if (iter1 != iterMin)
 				{
-					memswap(&(*iter1), &(*iterMin), sizeof(*iter1));
+					memSwap(&(*iter1), &(*iterMin), sizeof(*iter1));
 				}
 			}
 		}
@@ -142,7 +142,7 @@ namespace CppLinq
 
 				if (iter1 != iterMax)
 				{
-					memswap(&(*iter1), &(*iterMax), sizeof(*iter1));
+					memSwap(&(*iter1), &(*iterMax), sizeof(*iter1));
 				}
 			}
 		}
@@ -211,21 +211,22 @@ namespace CppLinq
 		return Inserter<DataSet<C>>(dataSet);
 	}
 
-	inline void memxor(void* dest, void* source, unsigned int size)
+	inline void memXOR(void* dest, void* source, unsigned int size)
 	{
 		const unsigned char* src = static_cast<const unsigned char*>(source);
 		unsigned char* dst = static_cast<unsigned char*>(dest);
+	
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			dst[i] ^= src[i];
 		}
 	}
 
-	inline void memswap(void* first, void* second, unsigned int size)
+	inline void memSwap(void* first, void* second, unsigned int size)
 	{
-		memxor(first, second, size);
-		memxor(second, first, size);
-		memxor(first, second, size);
+		memXOR(first, second, size);
+		memXOR(second, first, size);
+		memXOR(first, second, size);
 	}
 }
 
