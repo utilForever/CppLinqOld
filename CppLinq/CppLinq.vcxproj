@@ -119,7 +119,7 @@
     <ClCompile Include="LinqTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Old\Linq.h" />
+    <ClInclude Include="Linq.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
