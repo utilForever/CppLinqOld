@@ -1,6 +1,4 @@
 #include <vector>
-#include <iostream>
-
 #include <boost/lambda/lambda.hpp>
 
 #include "Linq.h"
@@ -36,36 +34,63 @@ namespace CppLinq
 
 		void PerformTest() const
 		{
-			assert(from(m_guests).count() == 3);
+			PerformFromTest();
+			PerformWhereTest();
+			PerformSelectTest();
+			PerformGroupTest();
+			PerformIntoTest();
+			PerformOrderbyTest();
+		}
 
-			assert(from(m_guests).orderby<int>(&_1 ->* &Person::m_age, Descending).count() == 3);
-			for (int i = 0; i < m_guests->size(); ++i)
-			{
-				cout << m_guests->at(i).m_name << ' ' << m_guests->at(i).m_age << endl;
-			}
-			
+	private:
+		void PerformFromTest() const
+		{
+			assert(from(m_guests).count() == 3);
+		}
+
+		void PerformWhereTest() const
+		{
 			assert(from(m_guests).where(&_1 ->* &Person::m_age > 30).count() == 1);
-			
+		}
+
+		void PerformSelectTest() const
+		{
 			assert(from(m_guests).select<int>(&_1 ->* &Person::m_age).count() == 3);
+
 			shared_ptr<vector<int>> results = from(m_guests).select<int>(&_1 ->* &Person::m_age).get();
 			assert(results->size() == 3);
 			assert((*results)[0] == 32);
+		}
 
+		void PerformGroupTest() const
+		{
 			assert(from(m_guests).group<int>(&_1 ->* &Person::m_age).count() == 3);
 
 			vector<Person> people;
 			people.push_back(Person("Joe", 20));
 			assert(from(&people).group<int>(&_1 ->* &Person::m_age).count() == 1);
+		}
 
+		void PerformIntoTest() const
+		{
 			m_guests->push_back(Person("Joe", 18));
-			DataSet<vector<Person>> results2 = insert(from(m_guests).where(&_1 ->* &Person::m_age > 30)).into(from(m_guests).where(&_1 ->* &Person::m_name == "Joe"));
-			assert(results2.count() == 2);
-			shared_ptr<vector<int>> ages = results2.select<int>(&_1 ->* &Person::m_age).get();
+
+			DataSet<vector<Person>> results = insert(from(m_guests).where(&_1 ->* &Person::m_age > 30))
+				.into(from(m_guests).where(&_1 ->* &Person::m_name == "Joe"));
+			assert(results.count() == 2);
+
+			shared_ptr<vector<int>> ages = results.select<int>(&_1 ->* &Person::m_age).get();
 			assert(count(ages->begin(), ages->end(), 32) == 1);
 			assert(count(ages->begin(), ages->end(), 18) == 1);
 		}
 
-	private:
+		void PerformOrderbyTest() const
+		{
+			assert(from(m_guests).orderby<int>(&_1 ->* &Person::m_age).count() == 4);
+			assert(from(m_guests).orderby<int>(&_1 ->* &Person::m_age, Ascending).count() == 4);
+			assert(from(m_guests).orderby<int>(&_1 ->* &Person::m_age, Descending).count() == 4);
+		}
+
 		shared_ptr<vector<Person>> m_guests;
 	};
 }
