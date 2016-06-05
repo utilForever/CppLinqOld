@@ -30,11 +30,11 @@
 
 ### where clause
 
-###### Filters source elements based on one or more Boolean expressions separated by logical AND and OR operators ( && or || )
+###### Filters source elements based on one or more Boolean expressions separated by logical AND and OR operators
 
 ### select clause
 
-####### Specifies the type and shape that the elements in the returned sequence will have when the query is executed
+###### Specifies the type and shape that the elements in the returned sequence will have when the query is executed
 
 ### group clause
 
