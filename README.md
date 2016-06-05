@@ -1,6 +1,7 @@
 # C++ Linq
 
 ###### C++ Linq Library compatible with C++98/03 (not use Modern C++)
+###### (Refer to [linqxx library](https://github.com/hjiang/linqxx))
 
 ```C++
 #include <vector>
