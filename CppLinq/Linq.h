@@ -213,8 +213,8 @@ namespace CppLinq
 
 	inline void memxor(void* dest, void* source, unsigned int size)
 	{
-		const unsigned char* src = (const unsigned char*)source;
-		unsigned char* dst = (unsigned char*)dest;
+		const unsigned char* src = static_cast<const unsigned char*>(source);
+		unsigned char* dst = static_cast<unsigned char*>(dest);
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			dst[i] ^= src[i];
