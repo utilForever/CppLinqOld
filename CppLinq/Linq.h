@@ -18,6 +18,12 @@ namespace CppLinq
 		INPLACE,	// Modify the container in place
 	};
 
+	enum SortOrder
+	{
+		Ascending,
+		Descending,
+	};
+
 	template <typename T, typename TPtr = shared_ptr<T>>
 	class DataSet
 	{
@@ -33,6 +39,9 @@ namespace CppLinq
 
 		template <typename S>
 		DataSet<vector<S>> select(function<S(typename T::value_type)> sel);
+
+		template <typename S>
+		DataSet<T> orderby(function<S(typename T::value_type)> sel, SortOrder order = Ascending);
 
 		template <typename S>
 		DataSet<vector<S>> group(function<S(typename T::value_type)> sel)
@@ -91,6 +100,54 @@ namespace CppLinq
 		}
 
 		return DataSet<vector<S>>(newContainer);
+	}
+
+	template <typename T, typename TPtr>
+	template <typename S>
+	DataSet<T> DataSet<T, TPtr>::orderby(function<S(typename T::value_type)> sel, SortOrder order)
+	{
+		if (order == Ascending)
+		{
+			for (typename T::iterator iter1 = m_container->begin(); iter1 != m_container->end() - 1; ++iter1)
+			{
+				typename T::iterator iterMin = iter1;
+
+				for (typename T::iterator iter2 = iter1 + 1; iter2 != m_container->end(); ++iter2)
+				{
+					if (sel(*iter2) < sel(*iterMin))
+					{
+						iterMin = iter2;
+					}
+				}
+				
+				if (iter1 != iterMin)
+				{
+					memswap(&(*iter1), &(*iterMin), sizeof(*iter1));
+				}
+			}
+		}
+		else
+		{
+			for (typename T::iterator iter1 = m_container->begin(); iter1 != m_container->end() - 1; ++iter1)
+			{
+				typename T::iterator iterMax = iter1;
+
+				for (typename T::iterator iter2 = iter1 + 1; iter2 != m_container->end(); ++iter2)
+				{
+					if (sel(*iter2) > sel(*iterMax))
+					{
+						iterMax = iter2;
+					}
+				}
+
+				if (iter1 != iterMax)
+				{
+					memswap(&(*iter1), &(*iterMax), sizeof(*iter1));
+				}
+			}
+		}
+
+		return m_container;
 	}
 
 	template <typename T>
@@ -152,6 +209,23 @@ namespace CppLinq
 	Inserter<DataSet<C>> insert(DataSet<C> dataSet)
 	{
 		return Inserter<DataSet<C>>(dataSet);
+	}
+
+	inline void memxor(void* dest, void* source, unsigned int size)
+	{
+		const unsigned char* src = (const unsigned char*)source;
+		unsigned char* dst = (unsigned char*)dest;
+		for (unsigned int i = 0; i < size; ++i)
+		{
+			dst[i] ^= src[i];
+		}
+	}
+
+	inline void memswap(void* first, void* second, unsigned int size)
+	{
+		memxor(first, second, size);
+		memxor(second, first, size);
+		memxor(first, second, size);
 	}
 }
 
