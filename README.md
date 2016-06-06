@@ -101,7 +101,7 @@ int main()
 
 ## Not Supported Features
 
-* join clause
+* join clause (ing...)
 * let clause
 * ascending
 * descending
