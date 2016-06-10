@@ -23,5 +23,8 @@
     <ClInclude Include="Linq.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Lambda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
